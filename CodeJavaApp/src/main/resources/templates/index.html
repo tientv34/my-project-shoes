@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Trang chủ</title>
+    <link href="" rel="stylesheet" th:href="@{/css/mystyle.css}"/>
+    <link href="" rel="stylesheet" th:href="@{/css/danhsach.css}"/>
+    <style>
+         /* Kiểu nút Dropdown */
+        /* Kiểu nút Dropdown */
+        .dropbtn {
+            color: black;
+            font-weight: bold;
+            padding: 7px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            width: 100px;
+        }
+
+        /* Dùng trong <div> để định vị nội dung thả xuống */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f5f5fa;
+            min-width: 90px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 12px;
+
+        }
+        .dropdown-content a:hover {
+            background-color: #c3c3c7;
+            color: white;
+
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        .dropdown:hover .dropbtn {
+            background-color: #c3c3c7;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <header id="header">
+        <a class="logo" href="/index">Sneaker Store</a>
+
+        <form class="search-form input-group" method="get" th:action="@{/search/1}">
+            <input class="search-field form-control search-ajax" name="keyword"
+                   placeholder="Nhập khóa tìm kiếm của bạn..."
+                   required th:value="${keyword}" type="search">
+            <span class="input-group-append">
+                <button class="btn btn-default" type="submit">
+                    <em class="fa fa-search fa-lg"></em>
+                </button>
+            </span>
+        </form>
+        <div>
+            <div th:if="${session.map == null}">
+                    <a href="/signup">
+                        <button class="buttonlogin" style="cursor:pointer">Đăng nhập</button>
+                    </a>
+                    <a href="/register">
+                        <button class="buttonlogin" style="cursor:pointer">Đăng Kí</button>
+                    </a>
+                <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart"
+                                                                        style="font-size:20px"></i>
+                    <span style="font-size: 20px " th:text="${(session.CountCart)+'-item'}"></span>
+                </a>&nbsp;
+            </div>
+            <div th:unless="${session.map == null}">
+                <div class="dropdown">
+                    <button class="dropbtn" th:text="${'Hello: '+session.map}"></button>
+                    <div class="dropdown-content">
+                        <a href="/index/donhang">Lịch sử mua hàng</a>
+                        <a href="/index/doimatkhau">Đổi mật khẩu</a>
+                        <a href="/logout">Đăng xuất</a>
+                    </div>
+                </div>
+                <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart"
+                                                                        style="font-size:20px"></i>
+                    <span style="font-size: 16px text-decoration: none"
+                          th:text="${(session.CountCart)+'-sản phẩm'}"></span>
+                </a>&nbsp;
+            </div>
+        </div>
+    </header>
+    <div class="clearfix"></div>
+
+    <main>
+        <div class="menu" style="align-items: center;">
+            <ul>
+                <li><a href="/index">TRANG CHỦ</a></li>
+                <li><a href="/index/new/page">GIÀY JORDAN</a></li>
+                <li class="submenu"><a href="/index/nike/page">GIÀY NIKE</a>
+                </li>
+                <li class="submenu"><a href="/index/adidas/page">GIÀY ADIDAS</a>
+
+                </li>
+                <li class="submenu"><a href="/index/converse/page">GIÀY CONVERSE</a>
+
+                </li>
+                <li><a href="/lienhe">LIÊN HỆ</a></li>
+                <li><a href="/tintuc">KIẾN THỨC VỀ GIÀY</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="banner">
+            <div class="title-text">
+                <h2 class="title-text-h1">Phong cách của bạn, chuyển động của bạn.</h2>
+                <h4 class="title-text-h3">Cung cấp nhiều loại giày với chất lượng tốt và kiểu dáng hiện đại. Cũng được
+                    tổ chức khuyến mãi hoặc bán hàng thường được tổ chức mỗi lần cho bạn. Một bộ sưu tập giày hoàn chỉnh
+                    với mức giá chuẩn mà ai cũng có thể tìm đến được.</h4>
+
+            </div>
+            <img alt="Men Shoes" src="../static/uploads/men-shoes.png" th:src="@{uploads/men-shoes.png}" width="1000">
+        </div>
+        <div>
+            <div class="content" th:if="${keyword1 == null}">
+                <div class="content-center">
+                    <article class="clearfix">
+                        <h1 style="text-align: center;padding: 15px 0;font-size: 30px;"> GIÀY JORDAN</h1>
+                        <div class="sneaker">
+                            <th:block th:class="${prdStat}" th:each="prd : ${productjordan1}">
+                                <div class="sneaker-item">
+                                    <span class="ribbon4">Giảm 50%</span>
+                                    <a href="trangchitiet.html">
+                                        <img alt="" class="item" th:src="@{${prd.imagePath}}">
+                                        <h4 class="name" th:text="${prd.name_prd}"></h4>
+                                        <h6 style="text-decoration:line-through"
+                                            th:text="${prd.convetPrice(prd.import_price)}"></h6>
+                                        <div class="cost " th:text="${prd.convetPrice(prd.price)}"></div>
+                                    </a>
+                                    <div class="chitiet">
+                                        <a th:href="@{/productdetails?id_prd={id_prd}(id_prd=${prd.id_prd})}">
+                                            <span>Xem chi tiết!</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </article>
+                    <div class="wrapper ">
+                        <a href="index/new/page"><span>Xem thêm!</span></a>
+                    </div>
+                    <article>
+                        <h1 style="text-align: center;padding: 15px 0;font-size: 30px; ">GIÀY NIKE</h1>
+                        <div class=" sneaker ">
+                            <th:block th:class="${prdStat}" th:each="prd : ${lisPrdNike1}">
+                                <div class="sneaker-item">
+                                    <span class="ribbon4">Giảm 40%</span>
+                                    <a href="trangchitiet.html">
+                                        <img alt="" class="item" th:src="@{${prd.imagePath}}">
+                                        <h4 class="name" th:text="${prd.name_prd}"></h4>
+                                        <h6 style="text-decoration:line-through"
+                                            th:text="${prd.convetPrice(prd.import_price)}"></h6>
+                                        <div class="cost " th:text="${prd.convetPrice(prd.price)}"></div>
+                                    </a>
+                                    <div class="chitiet">
+                                        <a th:href="@{/productdetails?id_prd={id_prd}(id_prd=${prd.id_prd})}">
+                                            <span>Xem chi tiết!</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div style="clear: both;"></div>
+                        </div>
+
+                    </article>
+                    <div class="wrapper ">
+                        <a href="/index/nike/page"><span>Xem thêm!</span></a>
+                    </div>
+
+                    <article class="clearfix ">
+                        <h1 style="text-align: center;padding: 15px 0;font-size: 30px ">GIÀY ADIDAS</h1>
+                        <div class="sneaker ">
+                            <th:block th:class="${prdStat}" th:each="prd : ${productadidas1}">
+                                <div class="sneaker-item">
+                                    <span class="ribbon4">Giảm 30%</span>
+                                    <a href="trangchitiet.html">
+                                        <img alt="" class="item" th:src="@{${prd.imagePath}}">
+                                        <h4 class="name" th:text="${prd.name_prd}"></h4>
+                                        <h6 style="text-decoration:line-through"
+                                            th:text="${prd.convetPrice(prd.import_price)}"></h6>
+                                        <div class="cost " th:text="${prd.convetPrice(prd.price)}"></div>
+                                    </a>
+                                    <div class="chitiet">
+                                        <a th:href="@{/productdetails?id_prd={id_prd}(id_prd=${prd.id_prd})}">
+                                            <span>Xem chi tiết!</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </article>
+                    <div class="wrapper ">
+                        <a href="/index/adidas/page"><span>Xem thêm!</span></a>
+                    </div>
+
+                    <article class="clearfix ">
+                        <h1 style="text-align: center;padding: 15px 0;font-size: 30px ">GIÀY CONVERSE</h1>
+                        <div class="sneaker ">
+                            <th:block th:class="${prdStat}" th:each="prd : ${productconversse1}">
+                                <div class="sneaker-item">
+                                    <span class="ribbon4">Giảm 20%</span>
+                                    <a href="trangchitiet.html">
+                                        <img alt="" class="item" th:src="@{${prd.imagePath}}">
+                                        <h4 class="name" th:text="${prd.name_prd}"></h4>
+                                        <h6 style="text-decoration:line-through"
+                                            th:text="${prd.convetPrice(prd.import_price)}"></h6>
+                                        <div class="cost " th:text="${prd.convetPrice(prd.price)}"></div>
+                                    </a>
+                                    <div class="chitiet">
+                                        <a th:href="@{/productdetails?id_prd={id_prd}(id_prd=${prd.id_prd})}">
+                                            <span>Xem chi tiết!</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </article>
+                    <div class="wrapper ">
+                        <a href="/index/converse/page"><span>Xem thêm!</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <h3>Sneaker<span>Store</span></h3>
+
+            <p class="footer-links">
+                <a class="link-1" href="index.html">Home</a>
+
+                <a href="#">Blog</a>
+
+                <a href="#">Pricing</a>
+
+                <a href="#">About</a>
+
+                <a href="#">Faq</a>
+
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">Company Name © 2015</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Bắc Từ Liêm</span>Hà Nội, Việt Nam</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>(84+)-1111111111</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="tientv34.jvb@gmail.com">tientv34.jvb@gmail.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>About the company</span>
+                Chuyên cung cấp giày thể thao sneaker nam, nữ hàng Replica 1:1 với giá tốt nhất tại Hà Nội,
+                TP.HCM.
+            </p>
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
+    <script type="text/javascript">
+         function openForm() {
+            document.getElementById("popupForm").style.display = "block";
+        }
+        function closeForm() {
+            document.getElementById("popupForm").style.display = "none";
+        }
+
+
+
+
+    </script>
+</div>
+</body>
+</html>

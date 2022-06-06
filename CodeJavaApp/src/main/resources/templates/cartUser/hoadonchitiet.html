@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Trang chủ</title>
+    <link href="" rel="stylesheet" th:href="@{/css/mystyle.css}"/>
+    <link href="" rel="stylesheet" th:href="@{/css/danhsach.css}"/>
+
+    <style>
+         /* Kiểu nút Dropdown */
+        /* Kiểu nút Dropdown */
+        .dropbtn {
+            color: black;
+            font-weight: bold;
+            padding: 7px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            width: 100px;
+        }
+
+        /* Dùng trong <div> để định vị nội dung thả xuống */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f5f5fa;
+            min-width: 90px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 12px;
+
+        }
+
+        .dropdown-content a:hover {
+            background-color: #c3c3c7;
+            color: white;
+
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+
+        .dropdown:hover .dropbtn {
+            background-color: #c3c3c7;
+        }
+
+        table   {
+           border-collapse: collapse;
+           border: 1px solid black;
+         text-align: center;
+         margin: auto;
+         font-size: 25px;
+          margin-top: 20px;
+          margin-bottom: 20px;
+        }
+        table  th {
+           border: 1px solid black;
+           padding: 5px;
+        }
+        table  td {
+           border: 1px solid black;
+           padding: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <header id="header">
+        <a class="logo" href="/index">Sneaker Store</a>
+
+        <form class="search-form input-group" method="get" th:action="@{/search/1}">
+            <input class="search-field form-control search-ajax" name="keyword"
+                   placeholder="Nhập khóa tìm kiếm của bạn..."
+                   required th:value="${keyword}" type="search">
+            <span class="input-group-append">
+                <button class="btn btn-default" type="submit">
+                    <em class="fa fa-search fa-lg"></em>
+                </button>
+            </span>
+        </form>
+        <div>
+            <div th:if="${session.map == null}">
+                <a href="/signup">
+                    <button class="buttonlogin" style="cursor:pointer">Đăng nhập</button>
+                </a>
+                <a href="/register">
+                    <button class="buttonlogin" style="cursor:pointer">Đăng Kí</button>
+                </a>
+                <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart"
+                                                                        style="font-size:20px"></i>
+                    <span style="font-size: 20px" th:text="${(session.CountCart)+'-item'}"></span>
+                </a>&nbsp;
+            </div>
+            <div th:unless="${session.map == null}">
+                <div class="dropdown">
+                    <button class="dropbtn" th:text="${'Hello: '+session.map}"></button>
+                    <div class="dropdown-content">
+                        <a>Lịch sử mua hàng</a>
+                        <a href="/index/doimatkhau">Đổi mật khẩu</a>
+                        <a href="/logout">Đăng xuất</a>
+                    </div>
+                </div>
+                <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart"
+                                                                        style="font-size:20px"></i>
+                    <span style="font-size: 16px text-decoration: none"
+                          th:text="${(session.CountCart)+'-sản phẩm'}"></span>
+                </a>&nbsp;
+            </div>
+        </div>
+    </header>
+    <div class="clearfix"></div>
+
+    <main>
+        <div class="menu">
+            <ul>
+                <li><a href="/index">TRANG CHỦ</a></li>
+                <li><a href="/index/new/page">GIÀY JORDAN</a></li>
+                <li class="submenu"><a href="/index/nike/page">GIÀY NIKE</a>
+                </li>
+                <li class="submenu"><a href="/index/adidas/page">GIÀY ADIDAS</a>
+
+                </li>
+                <li class="submenu"><a href="/index/converse/page">GIÀY CONVERSE</a>
+
+                </li>
+                <li><a href="/lienhe">LIÊN HỆ</a></li>
+                <li><a href="/tintuc">KIẾN THỨC VỀ GIÀY</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="margin-top: 20px;">
+                        <div>
+                            <h1 style="text-align: center;color:blue;">Chi tiết đơn hàng</h1>
+                        </div>
+
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">STT</th>
+                                <th style="text-align: center;">Mã hóa đơn</th>
+                                <th style="text-align: center;">Hình ảnh</th>
+                                <th style="text-align: center;">Thông tin sản phẩm</th>
+                                <th style="text-align: center;">Số lượng</th>
+                                <th style="text-align: center;">Số Tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <th:block th:each="bill,state : ${billDetail}">
+                                <input name="id" th:value="${bill.id}" type="hidden">
+                                <tr>
+                                    <td th:utext="${state.count}">count</td>
+                                    <td th:text="${bill.bills.mahd}"></td>
+                                    <td style="">
+                                        <img alt="" height="180" th:src="@{${bill.products.imagePath}}" width="200">
+                                    </td>
+                                    <!--                                <td th:text="${bill.bills.id}"></td>-->
+                                    <td th:text="${bill.products.name_prd}"></td>
+                                    <td th:text="${bill.quantity}"></td>
+                                    <td th:text="${bill.products.convetPrice(bill.price * bill.quantity)}"></td>
+                                </tr>
+                                <div>
+                                </div>
+                            </th:block>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="5">Tổng tiền</th>
+                                <td style="color:blue;font-weight: bold;">[[${totalPrice}]]</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-distributed">
+
+        <div class="footer-left">
+
+            <h3>Sneaker<span>Store</span></h3>
+
+            <p class="footer-links">
+                <a class="link-1" href="index.html">Home</a>
+
+                <a href="#">Blog</a>
+
+                <a href="#">Pricing</a>
+
+                <a href="#">About</a>
+
+                <a href="#">Faq</a>
+
+                <a href="#">Contact</a>
+            </p>
+
+            <p class="footer-company-name">Company Name © 2015</p>
+        </div>
+
+        <div class="footer-center">
+
+            <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>Bắc Từ Liêm</span>Hà Nội, Việt Nam</p>
+            </div>
+
+            <div>
+                <i class="fa fa-phone"></i>
+                <p>(84+)-1111111111</p>
+            </div>
+
+            <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="tientv34.jvb@gmail.com">tientv34.jvb@gmail.com</a></p>
+            </div>
+
+        </div>
+
+        <div class="footer-right">
+
+            <p class="footer-company-about">
+                <span>About the company</span>
+                Chuyên cung cấp giày thể thao sneaker nam, nữ hàng Replica 1:1 với giá tốt nhất tại Hà Nội,
+                TP.HCM.
+            </p>
+
+            <div class="footer-icons">
+
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+                <a href="#"><i class="fa fa-github"></i></a>
+
+            </div>
+
+        </div>
+
+    </footer>
+</div>
+</body>
+</html>

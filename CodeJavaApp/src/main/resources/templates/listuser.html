@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Sneaker Store</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!--Icons-->
+    <style>
+        table, th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-target="#sidebar-collapse" data-toggle="collapse"
+                    type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index"><span>Sneaker</span>Store</a>
+            <ul class="user-menu">
+                <li class="dropdown pull-right">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <svg class="glyph stroked male-user">
+                            <use xlink:href="#stroked-male-user"></use>
+                        </svg>
+                        Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+<!--                        <li><a href="#">-->
+<!--                            <svg class="glyph stroked male-user">-->
+<!--                                <use xlink:href="#stroked-male-user"></use>-->
+<!--                            </svg>-->
+<!--                            Hồ sơ</a></li>-->
+                        <li><a href="/logout">
+                            <svg class="glyph stroked cancel">
+                                <use xlink:href="#stroked-cancel"></use>
+                            </svg>
+                            Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="col-sm-3 col-lg-2 sidebar" id="sidebar-collapse">
+    <ul class="nav menu">
+        <li class="active">
+            <a href="/page">
+                <svg class="glyph stroked open folder">
+                    <use xlink:href="#stroked-open-folder"/>
+                </svg>
+                Quản lý tài khoản
+            </a>
+        </li>
+
+        <li>
+            <a href="/product/page">
+                <svg class="glyph stroked bag">
+                    <use xlink:href="#stroked-bag"></use>
+                </svg>
+                Quản lý sản phẩm
+            </a>
+        </li>
+
+        <li>
+            <a href="/bill">
+                <svg class="glyph stroked clipboard with paper">
+                    <use xlink:href="#stroked-clipboard-with-paper"/>
+                </svg>
+                Quản lý Đơn hàng
+            </a>
+        </li>
+
+        <li><a href="/index">
+            <svg class="glyph stroked open folder">
+                <use xlink:href="#stroked-open-folder"/>
+            </svg>
+            Trang chủ</a></li>
+    </ul>
+
+</div>
+<!--/.sidebar-->
+
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa-solid fa-house"></i></a></li>
+            <li class="active">Quản lí Tài Khoản</li>
+        </ol>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Danh sách Tài Khoản</h1>
+        </div>
+    </div>
+    <div>
+        <div>&nbsp</div>
+        <form th:action="@{/page/1}">
+            Filter: <input name="keyword" required th:value="${keyword}" type="text">
+            &nbsp;
+            <input type="submit" value="Search">
+            &nbsp;
+            <input onclick="clearFilter()" type="button" value="Clear">
+            <span style="color: red;
+                        font-size: 16px;"
+                  th:text="${ERROR}">
+
+            </span>
+
+            <span style=" font-size: 20px;
+                          text-align: right;
+                          margin-right: 50px;
+                          margin-left: 600px;">
+               Tổng: [[${totalItems}]]-tài khoản
+            </span>
+        </form>
+    </div>
+
+    <div class="btn-group" id="toolbar">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">STT</th>
+                            <th style="text-align: center;">Email</th>
+                            <th style="text-align: center;">First Name</th>
+                            <th style="text-align: center;">Last Name</th>
+                            <th style="text-align: center;">Address</th>
+                            <th style="text-align: center;">Vai trò</th>
+                            <th style="text-align: center;">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="user,state : ${listUser}">
+                            <input id="id" name="id" th:value="${user.id}" type="hidden">
+                            <tr>
+                                <td th:utext="${state.count}">count</td>
+                                <td th:text="${user.email}"></td>
+                                <td style="width:50px ; height:50px;" th:text="${user.firstname}"></td>
+                                <td th:text="${user.lastname}"></td>
+                                <td th:text="${user.address}"></td>
+                                <td th:text="${user.roles}"></td>
+                                <td class="form-group">
+                                    <a class="btn btn-primary" th:href="@{/edituser?id={id}(id=${user.id})}">Sửa</a>
+                                    <button class="btn btn-danger"
+                                            th:onclick="'javascript:myFunction(' + ${user.id} + ')'">Xóa
+                                    </button>
+
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center;
+                                font-size: 20px;">
+                    Total iteml: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+                    &nbsp; - &nbsp;
+
+                    <a th:href="@{'/page/1' + ${keyword != null ? '?keyword=' + keyword : ''}}"
+                       th:if="${currentPage > 1}">First</a>
+
+                    <span th:unless="${currentPage > 1}">First</span>
+                    &nbsp; &nbsp;
+
+                    <a th:href="@{'/page/' + ${currentPage - 1} + ${keyword != null ? '?keyword=' + keyword : ''}}"
+                       th:if="${currentPage > 1}">Previous</a>
+
+                    <span th:unless="${currentPage > 1}">Previous</span>
+                    &nbsp; &nbsp;
+
+
+                    <span th:each="number: ${#numbers.sequence(1,totalPages)}">
+
+                       <a th:href="@{'/page/' + ${number} + ${keyword != null ? '?keyword=' + keyword : ''} }"
+                          th:if="${number != currentPage}"><span
+                               th:text="${number}"></span></a>
+
+                        <span th:unless="${number != currentPage}">[[${number}]]</span>
+                        &nbsp; &nbsp;
+                    </span>
+
+                    <a th:href="@{'/page/' + ${currentPage + 1} + ${keyword != null ? '?keyword=' + keyword : ''} }"
+                       th:if="${currentPage < totalPages}">Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+                    &nbsp; &nbsp;
+
+                    <a th:href="@{'/page/' + ${totalPages} + ${keyword != null ? '?keyword=' + keyword : ''}}"
+                       th:if="${currentPage < totalPages}">Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+                    &nbsp; &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+</div>
+<!--/.main-->
+<script type="text/javascript">
+        function clearFilter(){
+            window.location = '/page';
+        }
+
+</script>
+<script type="text/javascript">
+        function myFunction(id) {
+          var result = confirm("Do you want to delete ?");
+          if (result) {
+                window.location = "/deleteuser?id="+id;
+          }else{
+              return null;
+          }
+         }
+
+</script>
+
+<script type="text/javascript">
+       $("nav menu").on("click", function(){
+   $("nav menu").find(".active").removeClass("active");
+   $(this).addClass("active");
+});
+
+</script>
+
+<script type="text/javascript">
+    $('li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+});
+
+</script>
+<script th:src="@{/js/jquery-1.11.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap-table.js}" type="text/javascript"></script>
+
+<!--icon-->
+<script th:src="@{/js/lumino.glyphs.js}" type="text/javascript"></script>
+
+
+</body>
+
+</html>

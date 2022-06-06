@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Liên Hệ</title>
+    <link href="" rel="stylesheet" th:href="@{/css/mystyle.css}"/>
+    <link href="" rel="stylesheet" th:href="@{/css/tintuc.css}"/>
+
+</head>
+<body>
+<header id="header">
+    <a class="logo" href="/index">Sneaker Store</a>
+    <form action="index.html" class="search-form input-group" id="searchform" method="GET" role="search">
+        <input autocomplete="off" class="search-field form-control search-ajax" name="s"
+               placeholder="Nhập khóa tìm kiếm của bạn..." type="search" value="">
+        <span class="input-group-append">
+                <button class="btn btn-default" type="submit">
+                    <em class="fa fa-search fa-lg"></em>
+                </button>
+            </span>
+        <input name="post_type" type="hidden" value="product">
+    </form>
+    <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart" style="font-size:20px"></i>
+        <span style="font-size: 16px" th:text="${(session.CountCart)+'-sản phẩm'}"></span>
+    </a>
+</header>
+<div class="clearfix"></div>
+<main>
+    <div class="menu">
+        <ul>
+            <li><a href="/index">TRANG CHỦ</a></li>
+            <li><a href="/index/new/page">GIÀY JORDAN</a></li>
+            <li class="submenu"><a href="/index/nike">NIKE</a>
+            </li>
+            <li class="submenu"><a href="/index/adidas">ADIDAS</a>
+
+            </li>
+            <li class="submenu"><a href="/index/converse">CONVERSE</a>
+
+            </li>
+            <li><a href="/lienhe">LIÊN HỆ</a></li>
+            <li><a href="/tintuc">KIẾN THỨC VỀ GIÀY</a></li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+    <div class="quangcao">
+        <img alt="" src="image/banner2.jpg" style="width: 100%;">
+    </div>
+    <article>
+        <h3>Kiến Thức Về Giày</h3>
+        <div class="content">
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture1.PNG">
+                <h2><a href="">HYPEBEAST LÀ GÌ?</a></h2>
+                <p>Đối với các tín đồ sneaker chân chính, hypebeast không phải là một thuật ngữ còn quá mới mẻ....
+                </p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture2.PNG">
+                <h2><a href="">GIÀY SNEAKER LÀ GÌ?</a></h2>
+                <p>Sneaker là một trong những phong cách thời trang được rất nhiều người yêu thích. Nó đã “làm
+                    mưa...</p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture3.PNG">
+                <h2><a href="">Top mẫu giày sneaker hot trend 2021 được săn đón</a></h2>
+                <p>Sau một năm đầy biến động của dịch bệnh trên toàn cầu, văn hóa sneakers vẫn tiếp tục phát...</p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture4.PNG">
+                <h2><a href="">Hướng dẫn chi tiết cách buộc dây giày Alexander</a></h2>
+                <p>Những kiểu buộc dây giày Alexander Mcqueen dưới đây chẳng đòi hỏi sự khéo tay hay cầu kỳ mà...
+                </p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture5.PNG">
+                <h2><a href="">Những tips phối đồ cùng Nike jordan 4 cực sành điệu</a></h2>
+                <p>Nike Jordan thực sự là một cơn sốt toàn cầu khi ra mẫu nào là sold out mẫu đó...</p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture6.PNG">
+                <h2><a href="">Siêu phẩm Nike Air Jordan 1 x Dior có gì HOT?</a></h2>
+                <p>Trong suốt những năm phát triển, Nike đã liên tục cho ra đời những phiên bản hot và Nike...</p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture7.PNG">
+                <h2><a href="">Xóa bỏ ranh giới nam nữ cùng đôi giày unisex Nike Air Force 1</a></h2>
+                <p>Nike Air Force 1, dòng sản phẩm thương hiệu mang dấu ấn lịch sử của Nike đã và đang...</p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture8.PNG">
+                <h2><a href="">Cách thắt dây giày Nike Air Force 1 cực đẹp mà bạn tự làm được</a></h2>
+                <p>Cách thắt dây giày Nike Air Force 1 cũng giống như những dòng giày khác, không khó nhưng lại...
+                </p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div class="content-item">
+                <img alt="" src="/uploads/Capture9.PNG">
+                <h2><a href="">Phối đồ với giày Balenciaga Triple S – 4 outfit chất lừ cho nam</a></h2>
+                <p>Phối đồ với giày Balenciaga Triple S là một vấn đề đang được các bạn trẻ quan tâm rất...</p>
+                <a class="more" href="">Đọc tiếp</a>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </article>
+</main>
+<footer class="footer-distributed">
+
+    <div class="footer-left">
+
+        <h3>Sneaker<span>Store</span></h3>
+
+        <p class="footer-links">
+            <a class="link-1" href="index.html">Home</a>
+
+            <a href="#">Blog</a>
+
+            <a href="#">Pricing</a>
+
+            <a href="#">About</a>
+
+            <a href="#">Faq</a>
+
+            <a href="#">Contact</a>
+        </p>
+
+        <p class="footer-company-name">Company Name © 2015</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Bắc Từ Liêm</span>Hà Nội, Việt Nam</p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>(84+)-1111111111</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="tientv34.jvb@gmail.com">tientv34.jvb@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+
+        <p class="footer-company-about">
+            <span>About the company</span>
+            Chuyên cung cấp giày thể thao sneaker nam, nữ hàng Replica 1:1 với giá tốt nhất tại Hà Nội,
+            TP.HCM.
+        </p>
+
+        <div class="footer-icons">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-github"></i></a>
+
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>

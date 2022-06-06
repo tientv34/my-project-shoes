@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Liên Hệ</title>
+    <link href="" rel="stylesheet" th:href="@{/css/mystyle.css}"/>
+    <style>
+        .content-lien-he {
+            border: 0;
+            padding: 30px 50px;
+            font-size: 23px;
+        }
+
+        .content-lien-he p {
+            margin: 0px;
+            margin-bottom: 9px;
+        }
+
+    </style>
+
+</head>
+<body>
+<header id="header">
+    <a class="logo" href="/index">Sneaker Store</a>
+    <form action="index.html" class="search-form input-group" id="searchform" method="GET" role="search">
+        <input autocomplete="off" class="search-field form-control search-ajax" name="s"
+               placeholder="Nhập khóa tìm kiếm của bạn..." type="search" value="">
+        <span class="input-group-append">
+                <button class="btn btn-default" type="submit">
+                    <em class="fa fa-search fa-lg"></em>
+                </button>
+            </span>
+        <input name="post_type" type="hidden" value="product">
+    </form>
+    <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart" style="font-size:20px"></i>
+        <span style="font-size: 16px" th:text="${(session.CountCart)+'-sản phẩm'}"></span>
+    </a>
+</header>
+<div class="clearfix"></div>
+<div class="menu">
+    <ul>
+        <li><a href="/index">TRANG CHỦ</a></li>
+        <li><a href="/index/new/page">GIÀY JORDAN</a></li>
+        <li class="submenu"><a href="/index/nike/page">NIKE</a>
+        </li>
+        <li class="submenu"><a href="/index/adidas/page">ADIDAS</a>
+
+        </li>
+        <li class="submenu"><a href="/index/converse/page">CONVERSE</a>
+
+        </li>
+        <li><a href="/lienhe">LIÊN HỆ</a></li>
+        <li><a href="/tintuc">KIẾN THỨC VỀ GIÀY</a></li>
+    </ul>
+</div>
+<div class="clearfix"></div>
+<div class="quangcao">
+    <img alt="" src="image/asignment.PNG" style="width: 100%;">
+</div>
+<div class="danhsach-header-left">
+    <p class="danhsach-header-left-p">
+                <span>
+                    <!-- <a href="index.html" data-wpel-link="internal">Trang chủ</a> -->
+                </span>
+    </p>
+</div>
+<div class="content-lien-he">
+    <h3 style="color: #333;line-height: 1.4;font-weight: bold;font-size: 24px;margin-bottom: 8px;">
+        <span></span>ĐỊA CHỈ SHOP TẠI<span></span>
+    </h3>
+    <h3 style="color: #333;line-height: 1.4;font-weight: bold;font-size: 24px;margin-bottom: 8px;">
+        <span></span>HÀ NỘI<span></span>
+    </h3>
+    <p class="font-title">Địa chỉ: Số 58 Phố Tố Hữu, Mễ Trì , Nam Từ Liêm, Hà Nội</p>
+    <p><a class="btn btn-style-link btn-color-white" data-wpel-link="external" href="https://www.facebook.com/161sneaker"
+          rel="nofollow noopener noreferrer" target="_blank">Liên hệ qua fanpage</a></p>
+    <p><strong>LIÊN HỆ VỚI SHOP </strong>ShopSneaker.com – Địa chỉ chuyên cung cấp các sản phẩm giày thể thao
+        hàng Replica 1:1 với mức giá tốt nhất tại Hà Nội, tp HCM.</p>
+    <p>Bạn đang cần mua 1 đôi giày tốt với giá phải chăng? Hãy đến với Shop giày Replica, đảm bảo bạn sẽ hài
+        lòng.</p>
+    <p>Tel: 0392133732</p>
+    <p>Địa chỉ: Số 58 Phố Tố Hữu, Mễ Trì , Nam Từ Liêm, Hà Nội</p>
+    <p>Giờ mở cửa: 9h – 20h</p>
+    <p>Miễn phí ship với đơn hàng trên 2 triệu.</p>
+</div>
+<footer class="footer-distributed">
+
+    <div class="footer-left">
+
+        <h3>Sneaker<span>Store</span></h3>
+
+        <p class="footer-links">
+            <a class="link-1" href="index.html">Home</a>
+
+            <a href="#">Blog</a>
+
+            <a href="#">Pricing</a>
+
+            <a href="#">About</a>
+
+            <a href="#">Faq</a>
+
+            <a href="#">Contact</a>
+        </p>
+
+        <p class="footer-company-name">Company Name © 2022</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Bắc Từ Liêm</span>Hà Nội, Việt Nam</p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>(84+)-1111111111</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="tientv34.jvb@gmail.com">tientv34.jvb@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+
+        <p class="footer-company-about">
+            <span>About the company</span>
+            Chuyên cung cấp giày thể thao sneaker nam, nữ hàng Replica 1:1 với giá tốt nhất tại Hà Nội,
+            TP.HCM.
+        </p>
+
+        <div class="footer-icons">
+
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-github"></i></a>
+
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

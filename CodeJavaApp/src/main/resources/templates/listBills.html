@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Sneaker Store</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <style>
+        table, th, td {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-target="#sidebar-collapse" data-toggle="collapse"
+                    type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/index"><span>Sneaker</span>Store</a>
+            <ul class="user-menu">
+                <li class="dropdown pull-right">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <svg class="glyph stroked male-user">
+                            <use xlink:href="#stroked-male-user"></use>
+                        </svg>
+                        Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+<!--                        <li><a href="#">-->
+<!--                            <svg class="glyph stroked male-user">-->
+<!--                                <use xlink:href="#stroked-male-user"></use>-->
+<!--                            </svg>-->
+<!--                            Hồ sơ</a></li>-->
+                        <li><a href="/logout">
+                            <svg class="glyph stroked cancel">
+                                <use xlink:href="#stroked-cancel"></use>
+                            </svg>
+                            Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="col-sm-3 col-lg-2 sidebar" id="sidebar-collapse">
+    <ul class="nav menu">
+        <li><a href="/page">
+            <svg class="glyph stroked open folder">
+                <use xlink:href="#stroked-open-folder"/>
+            </svg>
+            Quản lý tài khoản</a></li>
+
+        <li><a href="/product/page">
+            <svg class="glyph stroked bag">
+                <use xlink:href="#stroked-bag"></use>
+            </svg>
+            Quản lý sản phẩm</a></li>
+
+        <li class="active">
+            <a href="/bill">
+                <svg class="glyph stroked clipboard with paper">
+                    <use xlink:href="#stroked-clipboard-with-paper"/>
+                </svg>
+                Quản lý Đơn hàng
+            </a>
+        </li>
+
+        <li><a href="/index">
+            <svg class="glyph stroked open folder">
+                <use xlink:href="#stroked-open-folder"/>
+            </svg>
+            Trang chủ</a></li>
+    </ul>
+
+</div>
+<!--/.sidebar-->
+
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/bill"><i class="fa-solid fa-house"></i></a></li>
+            <li class="active">Quản lí đơn hàng</li>
+        </ol>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Danh sách Hóa Đơn Mua Hàng</h1>
+        </div>
+    </div>
+    <div>
+        <div>&nbsp</div>
+    </div>
+    <!--/.row-->
+    <div class="btn-group" id="toolbar">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">STT</th>
+                            <th style="text-align: center;">Mã Hóa Đơn</th>
+                            <th style="text-align: center;">Ngày tạo</th>
+                            <th style="text-align: center;">Trạng Thái</th>
+                            <th style="text-align: center;">Ghi Chú</th>
+                            <th style="text-align: center;">Số điện thoại</th>
+                            <th style="text-align: center;">Địa chỉ</th>
+                            <th style="text-align: center;">Hành Động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="bill,state : ${listBills}">
+                            <input name="id" th:value="${bill.id}" type="hidden">
+                            <tr>
+                                <td th:utext="${state.count}">count</td>
+                                <td th:text="${bill.mahd}"></td>
+                                <td th:text="${bill.date}"></td>
+                                <td style="width:100px ; height:50px;"
+                                    th:utext="${bill.status == 1} ? 'Chờ duyệt' : (${bill.status == 2} ? 'Đã duyệt' : 'Đã hủy') "></td>
+                                <td th:text="${bill.note}"></td>
+                                <td th:text="${bill.phone}"></td>
+                                <td th:text="${bill.address1}"></td>
+                                <td class="form-group" style="width:150px ; height:100px;">
+                                    <a class="btn btn-primary" th:href="@{/editbill?id={id}(id=${bill.id})}">
+                                        Xem
+                                    </a>
+                                    <a class="btn btn-danger" th:href="@{/huybill?id={id}(id=${bill.id})}">
+                                        Hủy
+                                    </a>
+
+                                </td>
+                            </tr>
+                        </th:block>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: center;
+                                font-size: 20px;">
+                    Tổng: [[${totalItems}]] - Trang [[${currentPage}]] of [[${totalPages}]]
+                    &nbsp; - &nbsp;
+
+                    <a th:href="@{/bill/1}" th:if="${currentPage > 1}">First</a>
+
+                    <span th:unless="${currentPage > 1}">First</span>
+                    &nbsp; &nbsp;
+
+                    <a th:href="@{'/bill/' + ${currentPage - 1}}" th:if="${currentPage > 1}">Previous</a>
+
+                    <span th:unless="${currentPage > 1}">Previous</span>
+                    &nbsp; &nbsp;
+
+
+                    <span th:each="number: ${#numbers.sequence(1,totalPages)}">
+
+                       <a th:href="@{'/bill/' + ${number}}" th:if="${number != currentPage}"><span
+                               th:text="${number}"></span></a>
+
+                        <span th:unless="${number != currentPage}">[[${number}]]</span>
+                        &nbsp; &nbsp;
+                    </span>
+
+                    <a th:href="@{'/bill/' + ${currentPage + 1} }" th:if="${currentPage < totalPages}">Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+                    &nbsp; &nbsp;
+
+                    <a th:href="@{'/bill/' + ${totalPages}}" th:if="${currentPage < totalPages}">Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+                    &nbsp; &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+</div>
+<!--/.main-->
+<script type="text/javascript">
+        $('li a').click(function(){
+    $('li a').removeClass("active");
+    $(this).addClass("active");
+
+</script>
+
+<script type="text/javascript">
+        function clearFilter(){
+            window.location = '/listUser/page';
+        }
+
+</script>
+
+<script type="text/javascript">
+        $("#delete-user").on("click", function(){
+<!--            alert("hello");-->
+            var id = $(this).attr("data-id");
+             var email = $(this).attr("name-id");
+            console.log(id);
+            console.log(email);
+<!--              alert(id);-->
+            var result = confirm("Do you want to disable "+email+ " ?");
+            if (result) {
+                 window.location = "/deleteuser?id="+id;
+            }else{
+                 window.location = "/listUser/page";
+            }
+
+        })
+
+</script>
+<script th:src="@{/js/jquery-1.11.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap-table.js}" type="text/javascript"></script>
+
+<!--Icons-->
+<script th:src="@{/js/lumino.glyphs.js}" type="text/javascript"></script>
+
+
+</body>
+
+</html>

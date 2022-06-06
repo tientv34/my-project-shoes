@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Sneaker Store</title>
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/datepicker3.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+    <!--Icons-->
+    <script src="js/lumino.glyphs.js"></script>
+    <style>
+        table, th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" data-target="#sidebar-collapse" data-toggle="collapse"
+                    type="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home_prd"><span>Sneaker</span>Store</a>
+            <ul class="user-menu">
+                <li class="dropdown pull-right">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <svg class="glyph stroked male-user">
+                            <use xlink:href="#stroked-male-user"></use>
+                        </svg>
+                        Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+<!--                        <li><a href="#">-->
+<!--                            <svg class="glyph stroked male-user">-->
+<!--                                <use xlink:href="#stroked-male-user"></use>-->
+<!--                            </svg>-->
+<!--                            Hồ sơ</a></li>-->
+                        <li><a href="/logout">
+                            <svg class="glyph stroked cancel">
+                                <use xlink:href="#stroked-cancel"></use>
+                            </svg>
+                            Đăng xuất</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+    </div><!-- /.container-fluid -->
+</nav>
+
+<div class="col-sm-3 col-lg-2 sidebar" id="sidebar-collapse">
+    <ul class="nav menu">
+        <li><a href="/page">
+            <svg class="glyph stroked open folder">
+                <use xlink:href="#stroked-open-folder"/>
+            </svg>
+            Quản lý tài khoản</a></li>
+
+        <li class="active"><a href="/product">
+            <svg class="glyph stroked bag">
+                <use xlink:href="#stroked-bag"></use>
+            </svg>
+            Quản lý sản phẩm</a></li>
+
+        <li>
+            <a href="/bill">
+                <svg class="glyph stroked clipboard with paper">
+                    <use xlink:href="#stroked-clipboard-with-paper"/>
+                </svg>
+                Quản lý Đơn hàng
+            </a>
+        </li>
+
+        <li><a href="/index">
+            <svg class="glyph stroked open folder">
+                <use xlink:href="#stroked-open-folder"/>
+            </svg>
+            Trang chủ</a></li>
+    </ul>
+</div>
+<!--/.sidebar-->
+
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa-solid fa-house"></i></a></li>
+            <li class="active">Danh sách sản phẩm</li>
+        </ol>
+    </div>
+    <!--/.row-->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Danh sách sản phẩm</h1>
+        </div>
+    </div>
+    <!--/.row-->
+    <div class="btn-group" id="toolbar">
+        <a class="btn btn-success" href="/addProduct">
+            <i class="glyphicon glyphicon-plus"></i> Thêm sản phẩm
+        </a>
+    </div>
+    <div>
+        <div>&nbsp</div>
+        <form th:action="@{/product/page/1}">
+            Filter: <input name="keyword" required th:value="${keyword}" type="text">
+            &nbsp;
+            <input type="submit" value="Search">
+            &nbsp;
+            <input onclick="clearFilter()" type="button" value="Clear">
+            <span style="color: red;
+                        font-size: 16px;"
+                  th:text="${ERRORPRD111}">
+            </span>
+
+            <span style=" font-size: 20px;
+                          text-align: right;
+                          margin-right: 50px;
+                          margin-left: 600px;">
+                Tổng: [[${totalItems}]]-sản phẩm
+            </span>
+        </form>
+    </div>
+    <!--    <div class="row">-->
+    <!--        <div class="col">-->
+    <!--            <div class="alert alert-danger" role="alert">-->
+    <!--                <strong>No Product Found</strong>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">STT</th>
+                            <th style="text-align: center;">Tên</th>
+                            <th style="text-align: center;">Giá nhập</th>
+                            <th style="text-align: center;">Giá bán</th>
+                            <th style="text-align: center;">Ảnh</th>
+                            <th style="text-align: center;">Số lượng</th>
+                            <th style="text-align: center;">Size</th>
+                            <th style="text-align: center;">Thể loại</th>
+                            <th style="text-align: center;">Mô tả</th>
+                            <th style="text-align: center;">Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="prd,state : ${listProduct}">
+                            <tr>
+                                <td th:utext="${state.count}"></td>
+                                <td th:text="${prd.name_prd}"></td>
+                                <td th:text="${prd.import_price}"></td>
+                                <td style="width:50px ; height:50px;" th:text="${prd.price}"></td>
+                                <td style="">
+                                    <img alt="" height="180" th:src="@{${prd.imagePath}}" width="200">
+                                </td>
+                                <td th:text="${prd.quantity}"></td>
+                                <td th:text="${prd.size}"></td>
+                                <td th:text="${prd.type}"></td>
+                                <td th:text="${prd.details_prd}"></td>
+                                <td class="form-group">
+                                    <a class="btn btn-primary"
+                                       th:href="@{/edit?id_prd={id_prd}(id_prd=${prd.id_prd})}">Sửa</a>
+                                    <button class="btn btn-danger"
+                                            th:onclick="'javascript:myFunction(' + ${prd.id_prd} + ')'">Xóa
+                                    </button>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="text-align: center;
+                                font-size: 20px;">
+                    Total iteml: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+                    &nbsp; - &nbsp;
+
+                    <a th:href="@{'/product/page/1'  + ${keyword != null ? '?keyword=' + keyword : ''}}"
+                       th:if="${currentPage > 1}">First</a>
+
+                    <span th:unless="${currentPage > 1}">First</span>
+                    &nbsp; &nbsp;
+
+                    <a th:href="@{'/product/page/' + ${currentPage - 1}  + ${keyword != null ? '?keyword=' + keyword : '' }}"
+                       th:if="${currentPage > 1}">Previous</a>
+
+                    <span th:unless="${currentPage > 1}">Previous</span>
+                    &nbsp; &nbsp;
+
+
+                    <span th:each="number: ${#numbers.sequence(1,totalPages)}">
+
+                       <a th:href="@{'/product/page/' + ${number} + ${keyword != null ? '?keyword=' + keyword : '' }}"
+                          th:if="${number != currentPage}"> <span
+                               th:text="${number}"></span></a>
+
+                        <span th:unless="${number != currentPage}">[[${number}]]</span>
+                        &nbsp; &nbsp;
+                    </span>
+
+                    <a th:href="@{'/product/page/' + ${currentPage + 1}  + ${keyword != null ? '?keyword=' + keyword : ''}}"
+                       th:if="${currentPage < totalPages}">Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+                    &nbsp; &nbsp;
+
+                    <a th:href="@{'/product/page/' + ${totalPages}  + ${keyword != null ? '?keyword=' + keyword : ''}}"
+                       th:if="${currentPage < totalPages}">Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+                    &nbsp; &nbsp;
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/.row-->
+</div>
+<!--/.main-->
+
+<script type="text/javascript">
+        function clearFilter(){
+            window.location = '/product/page';
+        }
+
+</script>
+
+<script type="text/javascript">
+       $('li a').click(function(){
+       $('li a').removeClass("active");
+       $(this).addClass("active");
+
+</script>
+
+<script type="text/javascript">
+        function myFunction(id_prd) {
+          var result = confirm("Do you want to delete ?");
+          if (result) {
+                window.location = "/delete?id_prd="+id_prd;
+            }else{
+                return null;
+            }
+         }
+
+</script>
+
+
+<script th:src="@{/js/jquery-1.11.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/bootstrap-table.js}" type="text/javascript"></script>
+<!--icon-->
+<script th:src="@{/js/lumino.glyphs.js}" type="text/javascript"></script>
+
+</body>
+
+</html>

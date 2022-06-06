@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <title>Sneaker Store</title>
+    <link href="" rel="stylesheet" th:href="@{/css/mystyle.css}"/>
+    <link href="" rel="stylesheet" th:href="@{/css/danhsach.css}"/>
+
+</head>
+
+<body>
+<header id="header">
+    <a class="logo" href="/index">Sneaker Store</a>
+    <form class="search-form input-group" id="searchform" method="GET" role="search" th:action="@{/search/1}">
+        <input class="search-field form-control search-ajax" name="keyword" placeholder="Nhập khóa tìm kiếm của bạn..."
+               th:value="${keyword}" type="search">
+        <span class="input-group-append">
+                <button class="btn btn-default" type="submit">
+                    <em class="fa fa-search fa-lg"></em>
+                </button>
+            </span>
+    </form>
+    <a href="/shopingcart" style="text-decoration: none"><i class="fa fa-shopping-cart cart" style="font-size:20px"></i>
+        <span style="font-size: 16px" th:text="${(session.CountCart)+'-sản phẩm'}"></span>
+    </a>
+</header>
+<div class="clearfix"></div>
+<div class="menu">
+    <ul>
+        <li><a href="/index">TRANG CHỦ</a></li>
+        <li><a href="/index/new/page">GIÀY JORDAN</a></li>
+        <li class="submenu"><a href="/index/nike/page">NIKE</a>
+        </li>
+        <li class="submenu"><a href="/index/adidas/page">ADIDAS</a>
+
+        </li>
+        <li class="submenu"><a href="/index/converse/page">CONVERSE</a>
+
+        </li>
+        <li><a href="/lienhe">LIÊN HỆ</a></li>
+        <li><a href="/tintuc">KIẾN THỨC VỀ GIÀY</a></li>
+    </ul>
+</div>
+<div class="clearfix">
+    <div class="chitiet">
+        <div class="danhsachnike">
+            <h1 class="nike-title">Sản Phẩm Mới</h1>
+        </div>
+        <div class="danhsach">
+            <div class="right">
+                <div class="danhsach-header">
+                    <div class="danhsach-header-left">
+                        <p class="danhsach-header-left-p">
+
+                        </p>
+                    </div>
+                    <div class="danhsach-header-right">
+                        <div class="dropdown">
+                            <button class="dropbtn">Lọc theo giá</button>
+                            <div class="dropdown-content">
+                                <a th:href="@{'/index/new/page/' + ${currentPage} + '?sortField=price&sortDir=' + 'asc'}">
+                                    Thứ tự theo giá: thấp đến cao
+                                </a>
+                                <a th:href="@{'/index/new/page/' + ${currentPage} + '?sortField=price&sortDir=' + 'desc'}">
+                                    Thứ tự theo giá: cao xuống thấp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="danhsach-main">
+                    <article>
+                        <div class=" sneaker-sanhsach ">
+                            <th:block th:class="${prdStat}" th:each="prd : ${productjordan1}">
+                                <div class="sneaker-item-danhsach ">
+                                    <span class="ribbon4">Giảm 30%</span>
+                                    <div>
+                                        <img alt="" class="item" th:src="@{${prd.imagePath}}">
+                                        <h4 class="name" th:text="${prd.name_prd}"></h4>
+                                        <h6 style="text-decoration:line-through"
+                                            th:text="${prd.convetPrice(prd.import_price)}"></h6>
+                                        <div class="cost " th:text="${prd.convetPrice(prd.price)}"></div>
+                                    </div>
+                                    <div class="chitiet">
+                                        <a th:href="@{/productdetails?id_prd={id_prd}(id_prd=${prd.id_prd})}">
+                                            <span>Xem chi tiết!</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </th:block>
+                            <div style="clear: both;"></div>
+                            <div class="sotrang">
+                                Total iteml: [[${totalItems}]] - Page [[${currentPage}]] of [[${totalPages}]]
+                                &nbsp;-&nbsp;
+
+                                <a th:href="@{'/index/new/page/1' + '?sortField=' +${sortField} +'&sortDir=' + ${sortDir}}"
+                                   th:if="${currentPage > 1}">First</a>
+
+                                <span th:unless="${currentPage > 1}">First</span>
+                                &nbsp; &nbsp;
+
+                                <a th:href="@{'/index/new/page/' + ${currentPage - 1} + '?sortField=' +${sortField} +'&sortDir=' + ${sortDir}}"
+                                   th:if="${currentPage > 1}">Previous</a>
+
+                                <span th:unless="${currentPage > 1}">Previous</span>
+                                &nbsp; &nbsp;
+
+
+                                <span th:each="number: ${#numbers.sequence(1,totalPages)}">
+
+                                       <a th:href="@{'/index/new/page/' + ${number} + '?sortField=' +${sortField} +'&sortDir=' + ${sortDir}}"
+                                          th:if="${number != currentPage}">
+                                           <span th:text="${number}"></span></a>
+
+                                        <span th:unless="${number != currentPage}">[[${number}]]</span>
+                                        &nbsp; &nbsp;
+                                    </span>
+
+                                <a th:href="@{'/index/new/page/' + ${currentPage + 1} + '?sortField=' +${sortField} +'&sortDir=' + ${sortDir} }"
+                                   th:if="${currentPage < totalPages}">Next</a>
+                                <span th:unless="${currentPage < totalPages}">Next</span>
+                                &nbsp; &nbsp;
+
+                                <a th:href="@{'/index/new/page/' + ${totalPages} + '?sortField=' +${sortField} +'&sortDir=' + ${sortDir}}"
+                                   th:if="${currentPage < totalPages}">Last</a>
+                                <span th:unless="${currentPage < totalPages}">Last</span>
+                                &nbsp; &nbsp;
+                            </div>
+                            <div class="description_woocommerce">
+
+                                <div class="term-description">
+                                    <h2>Giày thể thao Nike,Adidas,Converse </h2>
+                                    <p>Shopgiayreplica là địa chỉ chuyên bán <a data-wpel-link="internal"
+                                                                                href="#">giày Nike</a>
+                                        replica với giá tốt nhất tại Hà
+                                        Nội và tp HCM. Shop có hầu hết tất cả các sản phẩm giày thể thao Nike từ
+                                        Nike Air Jordan,
+                                        Air Max, Air Uptempo, React…. hàng chuẩn replica 1:1 (và có tùy chọn thêm
+                                        hàng rep thường).</p>
+                                    <p>Với phương châm mong muốn mang đến cho khách hàng những đôi giày Nike tốt
+                                        nhất với mức giá hợp lý, shopgiayreplica luôn cố gắng để giúp cho các tín đồ
+                                        yêu giày có thể mua giày Nike giá rẻ mà vẫn hài lòng về chất
+                                        lượng. Xem ngay những mẫu giày đang có mặt tại shop để lựa chọn được cho
+                                        mình đôi giày ưng ý nhất nhé.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </article>
+                </div>
+            </div>
+            <div class="left">
+                <div class="kienthucvegiay">
+                    <h3 class="widget-title" style="margin-bottom: 10px;    font-size: 24px;">
+                        <span>Bài viết nổi bật</span>
+                    </h3>
+                    <ul class="post_view">
+                        <li class="clearfix">
+                            <div class="post_view_item">
+                                <a data-wpel-link="internal" href="#">
+                                    <img alt="phối đồ giày air jordan cao cổ nam" class="img-responsive float-left"
+                                         src="/uploads/Capture1.PNG"> </a>
+                                <h4><a data-wpel-link="internal"
+                                       href="#"
+                                       title="Phối đồ cùng Nike Air Jordan 1 như thế nào để vừa sang vừa chất">Phối đồ cùng Nike Air Jordan 1 như thế nào để vừa
+                                    sang vừa chất</a></h4>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="post_view_item">
+                                <a data-wpel-link="internal" href="#">
+                                    <img alt="top-giay-sneaker-hot-2021" class="img-responsive float-left"
+                                         src="/uploads/Capture2.PNG"> </a>
+                                <h4><a data-wpel-link="internal" href="#"
+                                       title="Top mẫu giày sneaker hot trend 2021 được săn đón">Top mẫu giày sneaker hot trend 2021 được săn
+                                    đón</a></h4>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="post_view_item">
+                                <a data-wpel-link="internal" href="#">
+                                    <img class="img-responsive float-left" src="/uploads/Capture3.PNG"> </a>
+                                <h4><a data-wpel-link="internal" href="#"
+                                       title="Cách buộc dây giày Nike Jordan khiến bạn trở nên sành điệu">Cách buộc dây giày Nike Jordan khiến bạn trở nên
+                                    sành điệu</a></h4>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="post_view_item">
+                                <a data-wpel-link="internal" href="#">
+                                    <img alt="phối đồ giày mlb nữ" class="img-responsive float-left"
+                                         src="/uploads/Capture4.PNG"> </a>
+                                <h4><a data-wpel-link="internal" href="#"
+                                       title="Full kiểu phối đồ với giày MLB cực chất cho nam và nữ">Full kiểu phối đồ với giày MLB cực chất cho nam và
+                                    nữ</a></h4>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="post_view_item">
+                                <a data-wpel-link="internal" href="#">
+                                    <img alt="cach buoc day giay adidas" class="img-responsive float-left"
+                                         src="/uploads/Capture5.PNG"> </a>
+                                <h4><a data-wpel-link="internal"
+                                       href="#"
+                                       title="5 cách thắt dây giày thể thao Adidas, Nike đơn giản lại cực đẹp">5 cách thắt dây giày thể thao Adidas, Nike đơn
+                                    giản lại cực đẹp</a></h4>
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <div class="post_view_item">
+                                <a data-wpel-link="internal" href="#">
+                                    <img alt="phoi do voi giay adidas yeezy 350 v2" class="img-responsive float-left"
+                                         src="/uploads/Capture6.PNG"> </a>
+                                <h4><a data-wpel-link="internal" href="#"
+                                       title="11 cách phối đồ với giày Yeezy 350 cực chất năm 2020">11 cách phối đồ với giày Yeezy 350 cực chất năm
+                                    2020</a></h4>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer-distributed">
+
+    <div class="footer-left">
+
+        <h3>Sneaker<span>Store</span></h3>
+
+        <p class="footer-links">
+            <a class="link-1" href="index.html">Home</a>
+
+            <a href="#">Blog</a>
+
+            <a href="#">Pricing</a>
+
+            <a href="#">About</a>
+
+            <a href="#">Faq</a>
+
+            <a href="#">Contact</a>
+        </p>
+
+        <p class="footer-company-name">Company Name © 2015</p>
+    </div>
+
+    <div class="footer-center">
+
+        <div>
+            <i class="fa fa-map-marker"></i>
+            <p><span>Bắc Từ Liêm</span> Hà Nội, Việt Nam</p>
+        </div>
+
+        <div>
+            <i class="fa fa-phone"></i>
+            <p>(84+)-1111111111</p>
+        </div>
+
+        <div>
+            <i class="fa fa-envelope"></i>
+            <p><a href="tientv34.jvb@gmail.com">tientv34.jvb@gmail.com</a></p>
+        </div>
+
+    </div>
+
+    <div class="footer-right">
+
+        <p class="footer-company-about">
+            <span>About the company</span>
+            Chuyên cung cấp giày thể thao sneaker nam, nữ hàng Replica 1:1 với giá tốt nhất tại Hà Nội,
+            TP.HCM.
+        </p>
+
+        <div class="footer-icons">
+
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-github"></i></a>
+
+        </div>
+
+    </div>
+
+</footer>
+</body>
+</html>
